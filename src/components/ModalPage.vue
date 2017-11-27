@@ -48,7 +48,7 @@ export default {
   },
   computed: {
     info: function () {
-      return {...this.$store.getters.elemById(this.$route.params.id)}
+      return { ...this.$store.getters.elemById(this.$route.params.id) }
     }
   },
   created () {
@@ -81,13 +81,17 @@ export default {
     addComment () {
       this.$store.commit('addComment', {
         id: this.info.id,
-        comment: {name: 'Replicunt', avatar: '../statics/indigo.jpg', comment: this.addCommentText}
+        comment: {
+          name: 'Replicunt',
+          avatar: '../statics/indigo.jpg',
+          comment: this.addCommentText
+        }
       })
       this.addCommentText = ''
       this.$refs['modalScroll'].resume()
     },
     addLike () {
-      this.$store.commit('addLike', {id: this.info.id})
+      this.$store.commit('addLike', { id: this.info.id })
     }
   }
 }

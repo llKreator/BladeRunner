@@ -25,11 +25,18 @@ export default new VueRouter({
   scrollBehavior: () => ({ y: 0 }),
 
   routes: [
-    {path: '/',
+    {
+      path: '/',
+      name: 'index',
       component: load('Index'),
       children: [
-        {path: 'openElement/:id', name: 'modal', component: load('ModalPage')}
-      ]},
+        {
+          path: 'openElement/:id',
+          name: 'modal',
+          component: load('ModalPage')
+        }
+      ]
+    },
 
     // Always leave this last one
     { path: '*', component: load('Error404') } // Not found
