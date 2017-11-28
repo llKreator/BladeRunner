@@ -1,5 +1,5 @@
 <template>
-    <q-modal ref='modal' @close="$router.go(-1)" position="top" :content-css="{marginTop: '50px', background: 'rgba(50,50,50,0.5)'}" :maximized="isMobile">
+    <q-modal ref='modal' @close="$router.go(-1); modalClosed = true" position="top" :content-css="{marginTop: '50px', background: 'rgba(50,50,50,0.5)'}" :maximized="isMobile">
       <div class="modalImg justify-end row" :style="{backgroundImage: 'url('+info.img+')', width: imageWidth +'px', height: imageHeight}">
         <div class="self-end modalBtnPosition ">
           <q-btn @click="addLike" icon="thumb_up" color="primary" big rounded>
@@ -43,7 +43,8 @@ export default {
       isMobile: this.$q.platform.is.mobile,
       imageWidth: this.$q.platform.is.mobile ? '325' : '600',
       imageHeight: this.$q.platform.is.mobile ? '183px' : '338px',
-      showSubmitBtn: true
+      showSubmitBtn: true,
+      modalClosed: false
     }
   },
   computed: {
@@ -61,14 +62,16 @@ export default {
     loadMoreComments (index, done) {
       if (!(this.info.comments.length - this.commentsToShow.length === 1)) {
         setTimeout(() => {
-          let start = index * 4,
-            end = (index + 1) * 4
-          this.commentsToShow.push(...this.info.comments.slice(start, end))
-          if (!this.info.comments[start]) {
-            this.commentsShowLoad = false
-            this.$refs['modalScroll'].stop()
+          if (!this.modalClosed) {
+            let start = index * 4,
+              end = (index + 1) * 4
+            this.commentsToShow.push(...this.info.comments.slice(start, end))
+            if (!this.info.comments[start]) {
+              this.commentsShowLoad = false
+              this.$refs['modalScroll'].stop()
+            }
+            done()
           }
-          done()
         }, 1000)
       }
       else {

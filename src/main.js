@@ -12,7 +12,7 @@ require(`quasar/dist/quasar.${__THEME}.css`)
 
 import Vue from 'vue'
 import Quasar, * as All from 'quasar'
-import router from './router'
+import {router} from './router'
 import { store } from 'store'
 import axios from 'axios'
 import VueAxios from 'vue-axios'

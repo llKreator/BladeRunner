@@ -8,7 +8,7 @@ function load (component) {
   return () => import(`@/${component}.vue`)
 }
 
-export default new VueRouter({
+export const router = new VueRouter({
   /*
    * NOTE! VueRouter "history" mode DOESN'T works for Cordova builds,
    * it is only to be used only for websites.
@@ -22,7 +22,7 @@ export default new VueRouter({
    */
 
   mode: 'hash',
-  scrollBehavior: () => ({ y: 0 }),
+  scrollBehavior: (to, from, savedPosition) => ({ y: from }),
 
   routes: [
     {

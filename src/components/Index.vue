@@ -9,9 +9,9 @@
       <q-tab slot="title" name="Blade Runner" label="Blade Runner" />
       <q-tab slot="title" name="Blade Runner 2049" label="Blade Runner 2049" />
 
-      <q-tab-pane name="all" v-touch-swipe.horizontal="swipeTab">
+      <q-tab-pane name="all" >
         <q-infinite-scroll :handler="loadMore">
-          <ul key="all" class="row no-padding justify-around lsn">
+          <ul key="all" class="row no-padding justify-around lsn" v-touch-swipe.horizontal="swipeTab">
             <li @click="openModal(obj)" v-for="(obj,index) in allItemsToShow" :key="obj.id" class="mt10">
               <div :style="{backgroundImage: 'url('+obj.img+')', width: imageWidth +'px', height: imageHeight}">
                 <q-chip color="primary" icon="thumb_up">{{obj.likes}}</q-chip>
@@ -23,9 +23,9 @@
           </div>
         </q-infinite-scroll>
       </q-tab-pane>
-      <q-tab-pane key="Blade Runner" name="Blade Runner" v-touch-swipe.horizontal="swipeTab">
+      <q-tab-pane key="Blade Runner" name="Blade Runner">
         <q-infinite-scroll :handler="loadMore">
-          <ul class="no-padding row justify-around lsn">
+          <ul class="no-padding row justify-around lsn" v-touch-swipe.horizontal="swipeTab">
             <li @click="openModal(obj)" v-for="(obj,index) in bladeRunnerToShow" :key="obj.id" class="mt10">
               <div :style="{backgroundImage: 'url('+obj.img+')', width: imageWidth +'px', height: imageHeight}">
                 <q-chip color="primary" icon="thumb_up">{{obj.likes}}</q-chip>
@@ -37,9 +37,9 @@
           </div>
         </q-infinite-scroll>
       </q-tab-pane>
-      <q-tab-pane key="Blade Runner 2049" name="Blade Runner 2049" v-touch-swipe.horizontal="swipeTab">
+      <q-tab-pane key="Blade Runner 2049" name="Blade Runner 2049">
         <q-infinite-scroll :handler="loadMore">
-          <ul class="no-padding row justify-around lsn">
+          <ul class="no-padding row justify-around lsn" v-touch-swipe.horizontal="swipeTab">
             <li @click="openModal(obj)" v-for="(obj,index) in bladeRunner2049ToShow" :key="obj.id" class="mt10 round-borders">
               <div :style="{backgroundImage: 'url('+obj.img+')', width: imageWidth +'px', height: imageHeight}">
                 <q-chip color="primary" icon="thumb_up">{{obj.likes}}</q-chip>
@@ -54,7 +54,8 @@
     </q-tabs>
     <!-- modal-->
     
-    <router-view></router-view>
+      <router-view> </router-view>
+  
   </div>
 </template>
 
