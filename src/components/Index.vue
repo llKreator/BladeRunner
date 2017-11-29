@@ -1,5 +1,5 @@
 <template>
-  <div class="bg">
+  <div :class="['bg', !isMobile ? 'bgDesktop' : 'bgMobile']">
     <div class="row justify-center">
       <img :height="headerWidth" class="header" src="../assets/header.png" alt="">
     </div>
@@ -72,8 +72,9 @@ export default {
       selectedTab: 'all',
       showLoad: true,
       imageWidth: this.$q.platform.is.mobile ? '325' : '600',
+      imageHeight: this.$q.platform.is.mobile ? '183px' : '338px',
       headerWidth: this.$q.platform.is.mobile ? '90px' : '200px',
-      imageHeight: this.$q.platform.is.mobile ? '183px' : '338px'
+      isMobile: this.$q.platform.is.mobile
     }
   },
   methods: {
@@ -183,13 +184,18 @@ export default {
 
 <style scoped>
 .bg {
-  background-image: url("../assets/bg.jpg");
-  background-size: auto;
+  background-size: auto 100vh;
   background-position-x: 80%;
   width: 100%;
   min-height: 100vh;
   background-attachment: fixed;
   overflow: hidden;
+}
+.bgDesktop{
+  background-image: url("../assets/bg.jpg");
+}
+.bgMobile{
+  background-color: #252d3a;
 }
 .ls3 {
   letter-spacing: 2px;

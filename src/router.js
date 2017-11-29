@@ -22,7 +22,9 @@ export const router = new VueRouter({
    */
 
   mode: 'hash',
-  scrollBehavior: (to, from, savedPosition) => ({ y: from }),
+  scrollBehavior: (to, from, savedPosition) => {
+    return {y: from}
+  },
 
   routes: [
     {
