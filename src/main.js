@@ -11,8 +11,23 @@ require(`quasar/dist/quasar.${__THEME}.css`)
 // require(`quasar/dist/quasar.ie.${__THEME}.css`)
 
 import Vue from 'vue'
-import Quasar, * as All from 'quasar'
-import {router} from './router'
+import Quasar, {
+  QTabs,
+  QTab,
+  QTabPane,
+  QInfiniteScroll,
+  QChip,
+  QSpinnerDots,
+  QModal,
+  QBtn,
+  QList,
+  QItem,
+  QItemSide,
+  QItemMain,
+  QInput,
+  TouchSwipe
+} from 'quasar'
+import { router } from './router'
 import { store } from 'store'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
@@ -20,8 +35,24 @@ Vue.use(VueAxios, axios)
 
 Vue.config.productionTip = false
 Vue.use(Quasar, {
-  components: All,
-  directives: All
+  components: {
+    QTabs,
+    QTab,
+    QTabPane,
+    QInfiniteScroll,
+    QChip,
+    QSpinnerDots,
+    QModal,
+    QBtn,
+    QList,
+    QItemSide,
+    QItemMain,
+    QInput,
+    QItem
+  },
+  directives: {
+    TouchSwipe
+  }
 })
 
 if (__THEME === 'mat') {
