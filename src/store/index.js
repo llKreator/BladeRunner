@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
 Vue.use(Vuex)
+import commentos from '../statics/comments'
 
 export const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
@@ -15,10 +15,10 @@ export const store = new Vuex.Store({
     bladeRunner2049: []
   },
   mutations: {
-    dafaultFillBR (state, payload) {
+    fillBR (state, payload) {
       state.bladeRunner.push(payload)
     },
-    dafaultFillBR2049 (state, payload) {
+    fillBR2049 (state, payload) {
       state.bladeRunner2049.push(payload)
     },
     addComment (state, payload) {
@@ -37,6 +37,44 @@ export const store = new Vuex.Store({
     addLike (state, payload) {
       state.bladeRunner.find(e => e.id === payload.id) ? state.bladeRunner.find(e => e.id === payload.id).likes++
         : state.bladeRunner2049.find(e => e.id === payload.id).likes++
+    }
+  },
+  actions: {
+    fetchData ({commit, state}, payload) {
+      return new Promise(async (resolve, reject) => {
+        let id = 0, amountOfLikes
+        await Vue.axios.get(state.urls[0]).then(res => {
+          res.data.backdrops.forEach(img => {
+            amountOfLikes = Math.floor(Math.random() * (680 - 15)) + 15
+            commit('fillBR', {
+              img:
+              'https://image.tmdb.org/t/p/w' +
+              payload.imageWidth +
+              '/' +
+              img.file_path,
+              id: id++,
+              likes: amountOfLikes,
+              comments: [...commentos]
+            })
+          })
+        })
+        await Vue.axios.get(state.urls[1]).then(res => {
+          res.data.backdrops.forEach(img => {
+            amountOfLikes = Math.floor(Math.random() * (680 - 15)) + 15
+            commit('fillBR2049', {
+              img:
+              'https://image.tmdb.org/t/p/w' +
+              payload.imageWidth +
+              '/' +
+              img.file_path,
+              id: id++,
+              likes: amountOfLikes,
+              comments: [...commentos]
+            })
+          })
+        })
+        resolve()
+      })
     }
   },
   getters: {

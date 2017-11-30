@@ -1,5 +1,5 @@
 <template>
-    <q-modal ref='modal' @close="$router.go(-1); modalClosed = true" position="top" :content-css="{marginTop: '50px', background: 'rgba(50,50,50,0.5)'}" :maximized="isMobile">
+    <q-modal ref='modal' @close="$router.go(-1); modalClosed = true" position="top" :content-css="{marginTop: '30px', background: 'rgba(50,50,50,0.5)'}" :maximized="isMobile">
       <div class="modalImg justify-end row" :style="{backgroundImage: 'url('+info.img+')', width: imageWidth +'px', height: imageHeight}">
         <div class="self-end modalBtnPosition ">
           <q-btn @click="addLike" icon="thumb_up" color="primary" big rounded>
@@ -8,7 +8,7 @@
         </div>
       </div>
       <q-infinite-scroll ref='modalScroll' :handler="loadMoreComments">
-        <div :style="{width: imageWidth +'px', background: 'rgba(50,50,50,0.5)', margin:'auto'}" class="light">
+        <div :style="{background: 'rgba(50,50,50,0.5)', margin:'auto', width: isMobile ? '90%' : '600px'}" class="light">
           <q-list>
             <q-item v-for="(comment, index) in commentsToShow" :key="index" highlight>
               <q-item-side :avatar="comment.avatar" />
@@ -41,8 +41,8 @@ export default {
       commentsShowLoad: true,
       addCommentText: '',
       isMobile: this.$q.platform.is.mobile,
-      imageWidth: this.$q.platform.is.mobile ? '325' : '600',
-      imageHeight: this.$q.platform.is.mobile ? '183px' : '338px',
+      imageWidth: !this.$q.platform.is.mobile ? '600' : '325',
+      imageHeight: !this.$q.platform.is.mobile ? '338px' : '183px',
       showSubmitBtn: true,
       modalClosed: false
     }
@@ -121,5 +121,11 @@ export default {
 .q-item-sublabel {
   font-weight: 500;
   color: #f1eaff;
+}
+.mobileWidth{
+  width: 90%
+}
+.nonMobieWidth{
+  width: 600px
 }
 </style>

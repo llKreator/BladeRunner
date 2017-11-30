@@ -1,7 +1,7 @@
 <template>
   <div :class="['bg', !isMobile ? 'bgDesktop' : 'bgMobile']">
     <div class="row justify-center">
-      <img :height="headerWidth" class="header" src="../assets/header.png" alt="">
+      <img :height="headerHeight" class="header" src="../assets/header.png" alt="">
     </div>
 
     <q-tabs color='indigo-3' v-model="selectedTab" align="justify" :inverted="true" :glossy="true" @select="tabChange">
@@ -60,8 +60,6 @@
 </template>
 
 <script>
-import commentos from '../statics/comments'
-
 export default {
   data () {
     return {
@@ -71,54 +69,22 @@ export default {
       allItemsToShow: [],
       selectedTab: 'all',
       showLoad: true,
-      imageWidth: this.$q.platform.is.mobile ? '325' : '600',
-      imageHeight: this.$q.platform.is.mobile ? '183px' : '338px',
-      headerWidth: this.$q.platform.is.mobile ? '90px' : '200px',
+      imageWidth: !this.$q.platform.is.mobile ? '600' : '325',
+      imageHeight: !this.$q.platform.is.mobile ? '338px' : '183px',
+      headerHeight: !this.$q.platform.is.mobile ? '150px' : '90px',
       isMobile: this.$q.platform.is.mobile
     }
   },
   methods: {
-    async fetchData () {
-      let id = 0,
-        amountOfLikes
-      await this.axios.get(this.$store.state.urls[0]).then(res => {
-        res.data.backdrops.forEach(img => {
-          amountOfLikes = Math.floor(Math.random() * (680 - 15)) + 15
-          this.$store.commit('dafaultFillBR', {
-            img:
-              'https://image.tmdb.org/t/p/w' +
-              this.imageWidth +
-              '/' +
-              img.file_path,
-            id: id++,
-            likes: amountOfLikes,
-            comments: [...commentos]
-          })
-        })
+    fetchData () {
+      this.$store.dispatch('fetchData', {
+        imageWidth: this.imageWidth
+      }).then(() => {
+        this.allItems = [...this.$store.getters.allItems]
+        this.allItemsToShow = [...this.allItems.slice(0, 8)]
+        this.bladeRunnerToShow = [...this.$store.state.bladeRunner.slice(0, 8)]
+        this.bladeRunner2049ToShow = [...this.$store.state.bladeRunner2049.slice(0, 8)]
       })
-      await this.axios.get(this.$store.state.urls[1]).then(res => {
-        res.data.backdrops.forEach(img => {
-          amountOfLikes = Math.floor(Math.random() * (680 - 15)) + 15
-          this.$store.commit('dafaultFillBR2049', {
-            img:
-              'https://image.tmdb.org/t/p/w' +
-              this.imageWidth +
-              '/' +
-              img.file_path,
-            id: id++,
-            likes: amountOfLikes,
-            comments: [...commentos]
-          })
-        })
-      })
-      // this.allItems.push(...this.$store.state.bladeRunner)
-      // this.allItems.push(...this.$store.state.bladeRunner2049)
-      this.allItems.push(...this.$store.getters.allItems)
-      this.allItemsToShow.push(...this.allItems.slice(0, 8))
-      this.bladeRunnerToShow.push(...this.$store.state.bladeRunner.slice(0, 8))
-      this.bladeRunner2049ToShow.push(
-        ...this.$store.state.bladeRunner2049.slice(0, 8)
-      )
     },
     loadMore (index, done) {
       setTimeout(() => {
@@ -177,7 +143,21 @@ export default {
     }
   },
   created () {
-    this.fetchData()
+    this.fetchData(this.imageWidth)
+    //   alert(screen.orientation.type)
+    //   if ((window.screen.orientation.type === 'landscape-primary' || window.screen.orientation.type === 'landscape-secondary') && this.imageWidth !== '325') {
+    //     this.imageWidth = '600'
+    //     this.imageHeight = '338px'
+    //     this.headerHeight = '150px'
+    //     let iw = '600'
+    //     this.fetchData(iw)
+    //   }
+    //   else if ((window.screen.orientation.type === 'portrait-primary' || window.screen.orientation.type === 'portrait-secondary') && this.imageWidth !== '325') {
+    //     this.imageWidth = '325'
+    //     this.imageHeight = '183px'
+    //     this.headerHeight = '90px'
+    //     this.fetchData()
+    //   }
   }
 }
 </script>
