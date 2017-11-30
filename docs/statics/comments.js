@@ -33,7 +33,7 @@ export default [
   },
   {
     comment:
-        'Commentarie Ryan Commentarie Ryan koCommentarie RyanCommentarie Ryan koCommentarie RyanCommentarie Ryan koCommentarie RyankoCommentarie Ryan',
+        'Commentarie Ryan Commentaie Ryan koCommentarie RyanCommentarie Ryan koCommentarie RyanCommentarie Ryan koCommentarie RyankoCommentarie Ryan',
     avatar: 'statics/derkash.jpg',
     name: 'Vlad'
   },
